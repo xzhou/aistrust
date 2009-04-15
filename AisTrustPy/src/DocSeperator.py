@@ -24,11 +24,10 @@ if __name__ == '__main__':
     for line in inputFile:
         if line.startswith("<DOC>"):
             #we have read a new block
-            aRecord = ''''''.join(line)
-            aRecord.join(line)
+            aRecord = line
         elif line.startswith("</DOC>"):
-            aRecord.join(line)
+            aRecord+=line
             extractWords(aRecord)
         else:
-            aRecord.join(line)
+            aRecord+=line
         
