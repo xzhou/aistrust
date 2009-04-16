@@ -10,12 +10,19 @@ from BeautifulSoup import BeautifulStoneSoup
 from BeautifulSoup import BeautifulSoup
 import re
 import urllib2
+import string
+import timeit
 
 #extract the words from the record function
 def extractWords(aRecord):
     soup = BeautifulSoup(aRecord, convertEntities=BeautifulSoup.HTML_ENTITIES)
-    pureText = "".join(soup.body(text=True))
-    print pureText
+    exclude = set(string.punctuation)
+    pureText = " ".join(soup.body(text=True))
+    pureText = ''.join(ch for ch in pureText if ch not in exclude)
+    words = pureText.split()
+    return words
+    
+    
 
 if __name__ == '__main__':
     inputFile = open("test.html", 'r')
