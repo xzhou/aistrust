@@ -1,17 +1,30 @@
 '''
 Created on Apr 16, 2009
 @author: xzhou
-Class WebPage represent a web page which has key words and metainfor of the page.
+Class WebPage represent a web page which has key words and meta info of the page.
 '''
 
 class WebPage(object):
     '''
-    classdocs
+        Class WebPage represent a web page which has key words and meta info of the page.
     '''
 
-
-    def __init__(selfparams):
+    def __init__(self, words, metadata):
         '''
-        Constructor
+        this is the construct, words is the words sampled in the doc
+        and meta data is the meta info of the web site
         '''
+        self.words = words;
+        self.metadata = metadata;
+    
+    def setWords(self, words):
+        self.words = words
+    
+    def setMetadata(self, metadata):
+        self.metadata = metadata
+    
+if __name__ == '__main__':
+    pass
+    
         
+      
