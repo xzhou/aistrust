@@ -32,6 +32,7 @@ def extractWords(aRecord):
             if(title):
                 title = " ".join(title)
                 title = ''.join(ch for ch in title if ch not in exclude)
+                title = [word.lower() for word in title if len(word) > 3]
                 aPage.title = title
         
         if(soup.body):
@@ -40,6 +41,9 @@ def extractWords(aRecord):
                 pureText = " ".join(soup.body(text=True))
                 pureText = ''.join(ch for ch in pureText if ch not in exclude)
                 words = pureText.split()
+                #remove words less than 3 chars
+                words = [word.lower() for word in words if len(word) > 3]
+                
                 aPage.words = words
             else:
                 aPage.words = []
@@ -49,6 +53,7 @@ def extractWords(aRecord):
             allText = " ".join(allText)   
             pureText = ''.join(ch for ch in allText if ch not in exclude)
             words = pureText.split()
+            words = [word.lower() for word in words if len(word)>3]
             aPage.words = words
         
         #get the out link page
