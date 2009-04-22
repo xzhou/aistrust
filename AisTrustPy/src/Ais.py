@@ -6,3 +6,4 @@ Ais is the implementation of the T-regularatory model
 
 if __name__ == '__main__':
     pass
+    
