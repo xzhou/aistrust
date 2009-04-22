@@ -58,8 +58,17 @@ def extractWords(aRecord):
         
         #get the out link page
         
-        aPage.outLink = [ each.get('href') for each in soup.findAll('a') ]
+        links = [ each.get('href') for each in soup.findAll('a') ]
         
+        outLinks = []
+        
+        for aLink in outLinks:
+            if(aLink.startswith("..")): #remove the 
+                pass
+            else:
+                outLinks.append(aLink)
+        
+        aPage.outLinks = outLinks
         #we have to construct the inlink
         
         #we need the other meta data

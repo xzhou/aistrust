@@ -15,6 +15,8 @@ class WebPage(object):
         and meta data is the meta info of the web site
         '''
         self.words = words;
+        
+        #we need to define the metadata of the system
         self.metadata = metadata;
         self.title = title
         #connecting to other web site
