@@ -23,12 +23,15 @@ class WebPage(object):
         self.outLinks = outLinks
         #connection in web sites
         self.inLinks = inLinks
+        
+        self.pageType = ""
     
     def setWords(self, words):
         self.words = words
     
     def setMetadata(self, metadata):
         self.metadata = metadata
+    
     
     
 if __name__ == '__main__':
