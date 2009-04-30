@@ -27,13 +27,16 @@ class Repertoire(object):
     
     def addTCell(self, tCell):
         try:
-            return self.TCells.append(tCell)
+            if(type(tCell) == Cell):
+                self.TCells.append(tCell)
+            
         except Exception, e:
             print "error: addTCell(), make sure you passed a valid cell"
         
     
     def addRCell(self, rCell):
         try:
-            return self.RCells.append(rCell)
+            if(type(tCell) == Cell):
+                self.RCells.append(rCell)
         except Exception, e:
             print "error: addRCell(), make sure you passed a valid cell"
