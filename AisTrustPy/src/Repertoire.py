@@ -3,40 +3,85 @@ Created on Apr 29, 2009
 
 @author: xzhou
 '''
-class Cell(object):
-    def __init__(self):
+
+from Config import AisConfig
+
+
+class RCell(object):
+    def __init__(self, feature):
         '''
         Constructor
         '''
-        self.feature = ""   #this is a inmature cell
+        self.feature = feature   #this is a inmature cell
 
+class ECell(object):
+    def __init__(self, feature):
+        '''Constructor'''
+        self.feature = feature
 
 
 class Repertoire(object):
     '''
     Class Repertoire is the trained T cells and R Cells
     '''
-
-
+    
     def __init__(self):
         '''
         Constructor
         '''
-        self.TCells = []    #this is the T cells
+        self.ECells = []    #this is the T cells
         pself.RCells = []   #this is the R cells
     
-    def addTCell(self, tCell):
-        try:
-            if(type(tCell) == Cell):
-                self.TCells.append(tCell)
-            
-        except Exception, e:
-            print "error: addTCell(), make sure you passed a valid cell"
+    def existFeature(self, aWord):
+        for cell in ECells:
+            if cell.feature == aWord:
+                return True
+        for cell in RCells:
+            if cell.feature == aWord:
+                return True
+        return False
+    
+    def addTrustWord(self, aWord):
+        '''
+        add positive will initialize the T Cells and R Cells according to 
+        the configuration, ePositive << rPositive 
+        '''
+        i = 0
+        while ( i < AisConfig.eTrusted):
+            aCell = Cell(aWord)
+            self.ECells.append(aCell)
+            i = i + 1
+        i = 0
+        while( i < AisConfig.rTrusted):
+            aCell = Cell(aWord)
+            self.RCells.append(aCell)
+            i = i + 1
         
     
-    def addRCell(self, rCell):
-        try:
-            if(type(tCell) == Cell):
-                self.RCells.append(rCell)
-        except Exception, e:
-            print "error: addRCell(), make sure you passed a valid cell"
+    def addMaliciousWord(self, aWord):
+        '''
+        initialize a malicious word
+        '''
+        i = 0
+        while ( i < AisConfig.eMalicious):
+            aCell = Cell(aWord)
+            self.ECells.append(aCell)
+            i = i + 1
+        
+        i = 0
+        while ( i < AisConfig.rMalicous):
+            aCell = Cell(aWord)
+            self.RCells.append(aCell)
+            i = i + 1
+    
+    def addTest(self, aWord):
+        i = 0
+        while( i < AisConfig.eTest):
+            aCell = Cell(aWord)
+            self.ECells.append(aCell)
+            i = i + 1
+        i = 0
+        while( i < AisConfig.rTest):
+            aCell = Cell(aWord)
+            self.RCells.append(aCell)
+            i = i + 1

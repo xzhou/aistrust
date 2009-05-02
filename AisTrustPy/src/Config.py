@@ -9,21 +9,23 @@ class AisConfig(object):
     AisConfig read the configration file and save it's member
     '''
 
-    def __init__(selfparams):
+    nSample = 50 #number of features
+    nSlot = 10
+    
+    eTrusted = 6      #more r cells than e cells for positive case
+    rTrusted = 12
+    
+    eMalicious = 6
+    rMalicious = 5
+    
+    eTest = 6
+    rTest = 5
+        
+    def __init__(self):
         '''
         Constructor
         '''
-        self.nSample = 50
-        self.nSlot = 10
-        
-        self.ePositive = 6      #more r cells than e cells for positive case
-        self.rPositive = 12
-        
-        self.eNegative = 6
-        self.rNegative = 5
-        
-        self.eTest = 6
-        self.rTest = 5
+        pass
         
         
         
