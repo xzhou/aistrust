@@ -6,29 +6,22 @@ Created on Apr 30, 2009
 import Config
 import DocSeperator
 import APage
+import sys
+import Trainner
 
 def main():
-    inputFile = open("B01.txt", 'r')
-    aRecord = ''''''
-    allPages = 0
-    badPages = 0
-    for line in inputFile:
-        #print line
-        if line.startswith("<DOC>"):
-            #we have read a new block
-            aRecord = line
-        elif line.startswith("</DOC>"):
-            aRecord += line
-            allPages += 1
-            aPage, i = extractWords(aRecord)
-            badPages += i
-        else:
-            aRecord+=line
+    try:
+        trustedDir = argv[1]
+        untrustedDir = argv[2]
+    except Exception, e:
+        trustedDir = "../data/trusted"
+        untrustedDir = "../data/untrusted"
     
-    print "pages processed: ", allPages
-    print "bad pages: ",  badPages
-    print (badPages*1.0/allPages)*100, "%"
-
-
+    print "trainning on ", trustedDir, untrustedDir
+    trainner = Trainner.AisTrainning()
+    repertoire = trainner.train(trustedDir, untrustedDir)
+    print "trainning complete, dump file"
+    repertoire.dump()
+    
 if __name__ == '__main__':
     main()

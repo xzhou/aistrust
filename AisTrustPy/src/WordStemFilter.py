@@ -6,19 +6,18 @@ Created on Apr 20, 2009
 This is a class 
 '''
 
-import PoterStemAlg;
+from PoterStemAlg import PorterStemmer
+import re
+import string
 
 class WordProcess(object):
     '''
     classdocs
     '''
-    
-
-    def __init__(selfparams):
+    def __init__(self):
         '''
         Constructor
         '''
-    
     def filterAndStem(self, words = []):
         aPoterStemAlg = PorterStemmer()
         stemmedWords = []
@@ -32,7 +31,6 @@ class WordProcess(object):
                 if(word):
                     word = aPoterStemAlg.stem(word, 0, len(word)-1 )
                     stemmedWords.append(word)
-            
             return stemmedWords
         else:
             return []

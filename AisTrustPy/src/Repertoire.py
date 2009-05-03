@@ -30,13 +30,13 @@ class Repertoire(object):
         Constructor
         '''
         self.ECells = []    #this is the T cells
-        pself.RCells = []   #this is the R cells
+        self.RCells = []   #this is the R cells
     
     def existFeature(self, aWord):
-        for cell in ECells:
+        for cell in self.ECells:
             if cell.feature == aWord:
                 return True
-        for cell in RCells:
+        for cell in self.RCells:
             if cell.feature == aWord:
                 return True
         return False
@@ -48,12 +48,12 @@ class Repertoire(object):
         '''
         i = 0
         while ( i < AisConfig.eTrusted):
-            aCell = Cell(aWord)
+            aCell = ECell(aWord)
             self.ECells.append(aCell)
             i = i + 1
         i = 0
         while( i < AisConfig.rTrusted):
-            aCell = Cell(aWord)
+            aCell = RCell(aWord)
             self.RCells.append(aCell)
             i = i + 1
         
@@ -64,13 +64,13 @@ class Repertoire(object):
         '''
         i = 0
         while ( i < AisConfig.eMalicious):
-            aCell = Cell(aWord)
+            aCell = ECell(aWord)
             self.ECells.append(aCell)
             i = i + 1
         
         i = 0
         while ( i < AisConfig.rMalicous):
-            aCell = Cell(aWord)
+            aCell = RCell(aWord)
             self.RCells.append(aCell)
             i = i + 1
     
@@ -85,3 +85,26 @@ class Repertoire(object):
             aCell = Cell(aWord)
             self.RCells.append(aCell)
             i = i + 1
+            
+    def dump(self, eFileName = "efile.dmp", rFileName = "rfile.dmp"):
+        try:
+            eFile = open(eFileName, 'w')
+            rFile = open(rFileName, 'w')
+        except Exception, e:
+            print "dummping error, can not open file"
+        
+        for eCell in self.ECells:
+            #print eCell.feature
+            eFile.write(eCell.feature + "\n")
+        
+        eFile.close()
+        
+        for rCell in self.RCells:
+            #print rCell.feature
+            rFile.write(rCell.feature + "\n")
+            
+        rFile.close()
+
+        
+        
+        

@@ -23,7 +23,7 @@ class WebPage(object):
         self.outLinks = outLinks
         #connection in web sites
         self.inLinks = inLinks
-        self.pageType = "" 
+        self.pageType = "" # trusted or malicious
     
     def setWords(self, words):
         self.words = words

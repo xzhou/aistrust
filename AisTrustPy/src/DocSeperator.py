@@ -14,6 +14,7 @@ import string
 import timeit
 import sys
 import APage
+from WordStemFilter import WordProcess
 
 #extract the words from the record function
 def extractWords(aRecord):
@@ -22,6 +23,7 @@ def extractWords(aRecord):
     '''
     #TODO 
     aPage = APage.WebPage("", "", "")
+    wp = WordProcess()
     try:
         soup = BeautifulSoup(aRecord, convertEntities=BeautifulSoup.HTML_ENTITIES)
         #exclude punctuation
@@ -29,37 +31,19 @@ def extractWords(aRecord):
         #if the doc has body, extract the words in body
         if(soup.title):
             title = soup.title(text = True)
-            if(title):
-                title = " ".join(title)
-                title = ''.join(ch for ch in title if ch not in exclude)
-                title = [word.lower() for word in title if len(word) > 3]
-                aPage.title = title
+            aPage.title = wp.filterAndStem(title)
         
         if(soup.body):
             bodyText= soup.body(text=True)
-            if(bodyText):
-                pureText = " ".join(soup.body(text=True))
-                pureText = ''.join(ch for ch in pureText if ch not in exclude)
-                words = pureText.split()
-                #remove words less than 3 chars
-                words = [word.lower() for word in words if len(word) > 3]
-                
-                aPage.words = words
-            else:
-                aPage.words = []
+            aPage.words = wp.filterAndStem(bodyText)
         # else we extract all string
         else:
             allText = soup.findAll(text=True)
-            allText = " ".join(allText)   
-            pureText = ''.join(ch for ch in allText if ch not in exclude)
-            words = pureText.split()
-            words = [word.lower() for word in words if len(word)>3]
-            aPage.words = words
+            aPage.words = wp.filterAndStem(allText)
+            #print len(aPage.words)
         
         #get the out link page
-        
         links = [ each.get('href') for each in soup.findAll('a') ]
-        
         outLinks = []
         
         for aLink in outLinks:
@@ -70,11 +54,9 @@ def extractWords(aRecord):
         
         aPage.outLinks = outLinks
         #we have to construct the inlink
-        
         #we need the other meta data
-        
         return aPage, 0
-        
+     
     except Exception, e:
         print "dump error html"
         file = open("error.html", 'w')
@@ -82,24 +64,34 @@ def extractWords(aRecord):
         file.close() 
         return aPage, 1
     
-if __name__ == '__main__':
-    inputFile = open("B01.txt", 'r')
+    
+def readFile(fileName):
+    inputFile = open(fileName, 'r')
+    pages = []
     aRecord = ''''''
     allPages = 0
     badPages = 0
     for line in inputFile:
         #print line
         if line.startswith("<DOC>"):
-            #we have read a new block
+            #we have read a new blockrea
             aRecord = line
         elif line.startswith("</DOC>"):
             aRecord += line
             allPages += 1
             aPage, i = extractWords(aRecord)
+            if i == 0: 
+                pages.append(aPage)
             badPages += i
         else:
             aRecord+=line
-    
+       
     print "pages processed: ", allPages
     print "bad pages: ",  badPages
     print (badPages*1.0/allPages)*100, "%"
+    #return the pages in
+    print "good pages: ", len(pages) 
+    return pages
+if __name__ == '__main__':
+    #readFile("B01.txt")
+    pass
