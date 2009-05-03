@@ -16,6 +16,22 @@ import sys
 import APage
 from WordStemFilter import WordProcess
 
+
+def uniqueWords(strList, idfun=None): 
+    '''
+    order perserving uniqify words in a list
+    '''
+    if idfun is None:
+        def idfun(x): return x
+    seen = {}
+    result = []
+    for item in strList:
+        marker = idfun(item)
+        if marker in seen: continue
+        seen[marker] = 1
+        result.append(item)
+    return result
+
 #extract the words from the record function
 def extractWords(aRecord):
     '''
@@ -32,14 +48,17 @@ def extractWords(aRecord):
         if(soup.title):
             title = soup.title(text = True)
             aPage.title = wp.filterAndStem(title)
+            aPage.title = uniqueWords(aPage.title, None)
         
         if(soup.body):
             bodyText= soup.body(text=True)
             aPage.words = wp.filterAndStem(bodyText)
+            aPage.words = uniqueWords(aPage.words, None)
         # else we extract all string
         else:
             allText = soup.findAll(text=True)
             aPage.words = wp.filterAndStem(allText)
+            aPage.words = uniqueWords(aPage, None)
             #print len(aPage.words)
         
         #get the out link page
@@ -92,6 +111,22 @@ def readFile(fileName):
     #return the pages in
     print "good pages: ", len(pages) 
     return pages
+
+def readNormalHtml(fileName):
+    try:
+        inputFile = open(fileName, 'r')
+    except Exception, e:
+        print "can not open file ", fileName
+        return None
+    aRecord = ''''''
+    for line in inputFile:
+        aRecord += line
+    
+    return extractWords(aRecord)
+
+        
+
+
 if __name__ == '__main__':
     #readFile("B01.txt")
     pass
