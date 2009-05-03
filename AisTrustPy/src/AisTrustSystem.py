@@ -23,5 +23,7 @@ def main():
     print "trainning complete, dump file"
     repertoire.dump()
     
+    
+    
 if __name__ == '__main__':
     main()

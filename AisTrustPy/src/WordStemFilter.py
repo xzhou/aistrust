@@ -18,6 +18,13 @@ class WordProcess(object):
         '''
         Constructor
         '''
+        self.commonWords = []
+        f = open("commonWords.txt", 'r')
+        for line in f:
+            words = line.split()
+            for word in words:
+                self.commonWords.append(word)
+ 
     def filterAndStem(self, words = []):
         aPoterStemAlg = PorterStemmer()
         stemmedWords = []
@@ -28,7 +35,7 @@ class WordProcess(object):
             words = words.split()
             words = [word.lower() for word in words if len(word) > 3]
             for word in words:
-                if(word):
+                if(word and word not in self.commonWords):
                     word = aPoterStemAlg.stem(word, 0, len(word)-1 )
                     stemmedWords.append(word)
             return stemmedWords

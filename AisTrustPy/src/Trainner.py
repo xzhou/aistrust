@@ -78,8 +78,17 @@ class AisTrainning(object):
                 else:      
                     print "not file: ", fullFileName
         else: # a untrusted website
-            pass
-        
+            for file in fileList:
+                fullFileName = os.path.join(directory, file)
+                print "processing file: ", fullFileName
+                if os.path.isfile(fullFileName):
+                    pages = DocSeperator.readFile(fullFileName)
+                    print "number of pages", len(pages)
+                    for page in pages:
+                        page.type = "malicious"
+                    self.trainOnPages(pages)
+                else:      
+                    print "not file: ", fullFileName
     
     def train(self, trusted, untrusted):
         '''
