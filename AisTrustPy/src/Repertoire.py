@@ -6,18 +6,13 @@ Created on Apr 29, 2009
 
 from Config import AisConfig
 
-
-class RCell(object):
-    def __init__(self, feature):
+class Cell(object):
+    def __init__(self, feature, type):
         '''
         Constructor
         '''
         self.feature = feature   #this is a inmature cell
-
-class ECell(object):
-    def __init__(self, feature):
-        '''Constructor'''
-        self.feature = feature
+        self.type = type    #either E or T
 
 
 class Repertoire(object):
@@ -29,14 +24,10 @@ class Repertoire(object):
         '''
         Constructor
         '''
-        self.ECells = []    #this is the T cells
-        self.RCells = []   #this is the R cells
+        self.Cells = []
     
     def existFeature(self, aWord):
-        for cell in self.ECells:
-            if cell.feature == aWord:
-                return True
-        for cell in self.RCells:
+        for cell in self.Cells:
             if cell.feature == aWord:
                 return True
         return False
@@ -48,13 +39,13 @@ class Repertoire(object):
         '''
         i = 0
         while ( i < AisConfig.eTrusted):
-            aCell = ECell(aWord)
-            self.ECells.append(aCell)
+            aCell = Cell(aWord, "E")
+            self.Cells.append(aCell)
             i = i + 1
         i = 0
         while( i < AisConfig.rTrusted):
-            aCell = RCell(aWord)
-            self.RCells.append(aCell)
+            aCell = Cell(aWord, "R")
+            self.Cells.append(aCell)
             i = i + 1
         
     
@@ -64,47 +55,40 @@ class Repertoire(object):
         '''
         i = 0
         while ( i < AisConfig.eMalicious):
-            aCell = ECell(aWord)
-            self.ECells.append(aCell)
+            aCell = Cell(aWord, "E")
+            self.Cells.append(aCell)
             i = i + 1
         
         i = 0
         while ( i < AisConfig.rMalicous):
-            aCell = RCell(aWord)
-            self.RCells.append(aCell)
+            aCell = Cell(aWord, "R")
+            self.Cells.append(aCell)
             i = i + 1
     
     def addTest(self, aWord):
         i = 0
         while( i < AisConfig.eTest):
-            aCell = Cell(aWord)
-            self.ECells.append(aCell)
+            aCell = Cell(aWord, "E")
+            self.Cells.append(aCell)
             i = i + 1
         i = 0
         while( i < AisConfig.rTest):
-            aCell = Cell(aWord)
-            self.RCells.append(aCell)
+            aCell = Cell(aWord, "R")
+            self.Cells.append(aCell)
             i = i + 1
             
-    def dump(self, eFileName = "efile.dmp", rFileName = "rfile.dmp"):
+    def dump(self, eFileName = "file.dmp", rFileName = "rfile.dmp"):
         try:
             eFile = open(eFileName, 'w')
             rFile = open(rFileName, 'w')
         except Exception, e:
             print "dummping error, can not open file"
         
-        for eCell in self.ECells:
+        for aCell in self.Cells:
             #print eCell.feature
-            eFile.write(eCell.feature + "\n")
+            eFile.write(aCell.feature + " " + aCell.type +  "\n")
         
         eFile.close()
-        
-        for rCell in self.RCells:
-            #print rCell.feature
-            rFile.write(rCell.feature + "\n")
-            
-        rFile.close()
-
         
         
         

@@ -90,6 +90,9 @@ class AisTrainning(object):
                 else:      
                     print "not file: ", fullFileName
     
+    def shuffleCells(self):
+        random.shuffle(self.repertoire.Cells)
+    
     def train(self, trusted, untrusted):
         '''
         Function Train will scan the trusted directory for trusted web site and 
@@ -101,6 +104,9 @@ class AisTrainning(object):
         
         unTrustedStates = ["untrusted", 0, 0, 0]
         os.path.walk(untrusted, self.processDir, unTrustedStates)
+        
+        shuffleCells()
+        
         return self.repertoire
         
         

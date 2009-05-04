@@ -9,7 +9,7 @@ class AisConfig(object):
     AisConfig read the configration file and save it's member
     '''
 
-    nSample = 50 #number of features
+    nSample = 50 #number of features must be a even number
     nSlot = 10
     
     eTrusted = 6      #more r cells than e cells for positive case
