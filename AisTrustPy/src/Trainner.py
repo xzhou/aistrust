@@ -7,7 +7,7 @@ from APage import WebPage
 from Config import AisConfig
 from Repertoire import Repertoire
 import DocSeperator
-
+from ICRM import ICRMSystem
 
 import os
 import random
@@ -27,27 +27,8 @@ class AisTrainning(object):
 
     def trainOnePage(self, aWebPage, repertoire):
         #sample n words in webpage
-        if type(aWebPage) == WebPage:
-            if(aWebPage.type == "trusted"):
-                #sample n words 
-                print len(aWebPage.words)
-                if(len(aWebPage.words) >= AisConfig.nSample):
-                    i = 0;
-                    while(i < AisConfig.nSample):
-                        index = random.randint(0, len(aWebPage.words) - 1)
-                        if(not repertoire.existFeature(aWebPage.words[index])):
-                            repertoire.addTrustWord(aWebPage.words[index])
-                        i = i + 1  
-            elif(aWebPage.type == "malicious"):
-                if(len(aWebPage.words) >= AisConfig.nSample):
-                    i = 0
-                    while(i < AisConfig.nSample):
-                        index = random.randint(0, len(aWebPage.words) - 1)
-                        if(not repertoire.existFeature(aWebPage.words[index])):
-                           repertoire.addMaliciousWord(aWebPage.words[index])
-                        i = i + 1
-        else:
-            print "not a page"
+        aICRMSys = ICRMSystem()
+        aICRMSys.train(aWebPage, repertoire) 
     
     
     def trainOnPages(self, pages):

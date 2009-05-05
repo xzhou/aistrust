@@ -32,6 +32,9 @@ class Repertoire(object):
                 return True
         return False
     
+    def addACell(self, feature, type):
+        self.Cells.append(Cell(feature, type))
+        
     def addTrustWord(self, aWord):
         '''
         add positive will initialize the T Cells and R Cells according to 
@@ -48,7 +51,6 @@ class Repertoire(object):
             self.Cells.append(aCell)
             i = i + 1
         
-    
     def addMaliciousWord(self, aWord):
         '''
         initialize a malicious word
