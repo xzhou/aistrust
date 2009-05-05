@@ -36,7 +36,7 @@ class PageAPC:
                 slots.append(Slot(feature))
             self.featureArray.append(slots)
 
-class TestPhase:
+class ICRMSystem:
     '''
     class TestPhase is the testing phase of the AIS system
     '''
@@ -150,7 +150,11 @@ class TestPhase:
         return interactionResult  
  
     def decisionPhase(self, interactionResult):
-        #extract the features
+        '''
+        decision phase count the E cells and R cells that a page bind to  and 
+        return the score for this page, a score > 0 means trusted
+        '''
+        
         pageScore = 0
         features = []
         for cell in interactionResult:

@@ -80,7 +80,6 @@ class Repertoire(object):
     def dump(self, eFileName = "file.dmp", rFileName = "rfile.dmp"):
         try:
             eFile = open(eFileName, 'w')
-            rFile = open(rFileName, 'w')
         except Exception, e:
             print "dummping error, can not open file"
         
@@ -89,6 +88,17 @@ class Repertoire(object):
             eFile.write(aCell.feature + " " + aCell.type +  "\n")
         
         eFile.close()
+        
+    def recover(self, fileName = "file.dmp"):
+        '''
+        recover will read the repertoire back from a file
+        '''
+        self.Cell = []
+        f = open(fileName, "w")
+        for line in f:
+            feature, type = line.split()
+            aCell = Cell(feature, type)
+            self.Cells.append(aCell)
         
         
         

@@ -29,7 +29,7 @@ class AisTrainning(object):
         #sample n words in webpage
         if type(aWebPage) == WebPage:
             if(aWebPage.type == "trusted"):
-                #sample n words
+                #sample n words 
                 print len(aWebPage.words)
                 if(len(aWebPage.words) >= AisConfig.nSample):
                     i = 0;
