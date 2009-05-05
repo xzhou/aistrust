@@ -23,21 +23,22 @@ class PageAPC:
     def __init__(self, features):
         self.slots = []
         self.features = []
-        self.addFeatures(features)
+        self.__addFeatures(features)
     
     #this is a private method
     def __addFeature(self, feature=""):
         #generate slots for the feature
-        for i in range(0, AisConfig.nSlots):
+        for i in range(0, AisConfig.nSlot):
             self.slots.append(Slot(feature))
-    def addFeatures(self, features=[]):
+    def __addFeatures(self, features=[]):
         for feature in features:
             self.__addFeature(feature)
+            self.features.append(feature)
         random.shuffle(self.slots)
         
     def getFeatures(self):
         return self.features
-            
+        
 class ICRMSystem:
     '''
     class TestPhase is the testing phase of the AIS system
@@ -55,6 +56,10 @@ class ICRMSystem:
                 sampleFeatures.append(aPage.words[index])
                 i = i + 1
             pageAPC = PageAPC(sampleFeatures)
+            
+            for slot in pageAPC.slots:
+                print slot.feature
+            
             return pageAPC
         else:
             return None
@@ -68,24 +73,34 @@ class ICRMSystem:
         return processAPage(aPage)
 
     def init(self, aPageAPC, repertoire, type="test"):
+        print "init a page ", 
+
+        if aPageAPC == None:
+            return None
         features = aPageAPC.getFeatures();
+        
         for feature in features:
             if not repertoire.existFeature(feature):
                 if type == "trusted":
                     #generate E and R cells
-                    repertoire.addTrustedFeature(feature)
+                    print feature
+                    repertoire.addTrustWord(feature)
                 elif type == "malicious":
                     repertoire.addMaliciousWord(feature)
                 elif type == "test":
                     repertoire.addTest(feature)
+        print "complete"
         return aPageAPC
     
     def bind(self, aPageAPC, repertoire):
         for slot in aPageAPC.slots:
             #get all cells of this feature and randomly select one
             cells = [cell for cell in repertoire.Cells if cell.feature == slot.feature]
-            index = random.randint(0, len(cells)-1)
-            slot.bind = cells[index]
+            if len(cells):
+                index = random.randint(0, len(cells)-1)
+                slot.bind = cells[index]
+            else:
+                slot.bind = None
         return aPageAPC
     
     def proliferation(self, aPageAPC, repertoire):
@@ -93,7 +108,7 @@ class ICRMSystem:
         this is the proliferation pahse of T, E cell with antigen
         '''
         interactionResult = []
-        for i in range(0, len(aPageAPC.slots)):
+        for i in range(0, len(aPageAPC.slots)-1):
             f1 = aPageAPC.slots[i]
             f2 = aPageAPC.slots[i+1]
             
@@ -116,7 +131,7 @@ class ICRMSystem:
                     interactionResult.append(f1.bind)
                     interactionResult.append(f1.bind)
                     interactionResult.append(f2.bind)
-                    interactionResutl.append(f2.bind)  
+                    interactionResult.append(f2.bind)  
                     repertoire.addACell(f1.bind.feature, f1.bind.type)
                     repertoire.addACell(f2.bind.feature, f2.bind.type)
                 elif f2.bind.type == "R":
@@ -129,9 +144,9 @@ class ICRMSystem:
                     interactionResult.append(f1.bind)
                 elif f2.bind.type == "E":
                     interactionResult.append(f1.bind)
-                    interactionResutl.append(f1.bind)
+                    interactionResult.append(f1.bind)
                     repertoire.addACell(f1.bind.feature, f1.bind.type)
-                    interactionResutl.append(f2.bind)
+                    interactionResult.append(f2.bind)
                 elif f2.bind.type == "R":
                     interactionResult.append(f1.bind)
                     interactionResult.append(f2.bind)  
@@ -164,16 +179,20 @@ class ICRMSystem:
                     
     def test(self, fileName, repertoire):
         aPageAPC = self.preprocess(fileName)
-        self.init(aPageAPC, repertoire, "test")
-        self.bind(aPageAPC, repertoire)
-        interactionResult = self.proliferation(aPageAPC, repertoire)
-        return self.decisionPhase(interactionResult)
+        if not aPageAPC == None:
+            self.init(aPageAPC, repertoire, "test")
+            self.bind(aPageAPC, repertoire)
+            interactionResult = self.proliferation(aPageAPC, repertoire)
+            return self.decisionPhase(interactionResult)
+        return None
     
     def train(self, aPage, repertoire):
         aPageAPC = self.processAPage(aPage)
-        self.init(aPageAPC, repertoire, "test")
-        self.bind(aPageAPC, repertoire)
-        self.proliferation(aPageAPC, repertoire)
-        return repertoire
+        if not aPageAPC == None:
+            self.init(aPageAPC, repertoire, aPage.type)
+            self.bind(aPageAPC, repertoire)
+            self.proliferation(aPageAPC, repertoire)
+            return repertoire
+        return None
       
     

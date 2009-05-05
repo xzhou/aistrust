@@ -28,7 +28,9 @@ class AisTrainning(object):
     def trainOnePage(self, aWebPage, repertoire):
         #sample n words in webpage
         aICRMSys = ICRMSystem()
-        aICRMSys.train(aWebPage, repertoire) 
+        if aWebPage == None:
+            return None
+        aICRMSys.train(aWebPage, repertoire)
     
     
     def trainOnPages(self, pages):
@@ -86,8 +88,8 @@ class AisTrainning(object):
         unTrustedStates = ["untrusted", 0, 0, 0]
         os.path.walk(untrusted, self.processDir, unTrustedStates)
         
-        shuffleCells()
-        
+        #self.repertoire.dump("repertoire.dmp")
+        #self.shuffleCells()
         return self.repertoire
         
         

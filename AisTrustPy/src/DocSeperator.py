@@ -35,11 +35,12 @@ def uniqueWords(strList, idfun=None):
 #extract the words from the record function
 def extractWords(aRecord):
     '''
-        returns the 
+        returns a page
     '''
     #TODO 
     aPage = APage.WebPage("", "", "")
     wp = WordProcess()
+    #if True:
     try:
         soup = BeautifulSoup(aRecord, convertEntities=BeautifulSoup.HTML_ENTITIES)
         #exclude punctuation
@@ -58,7 +59,7 @@ def extractWords(aRecord):
         else:
             allText = soup.findAll(text=True)
             aPage.words = wp.filterAndStem(allText)
-            aPage.words = uniqueWords(aPage, None)
+            aPage.words = uniqueWords(aPage.words, None)
             #print len(aPage.words)
         
         #get the out link page

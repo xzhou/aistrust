@@ -85,8 +85,9 @@ class Repertoire(object):
         except Exception, e:
             print "dummping error, can not open file"
         
+        print "dumping repertoire to file: ", len(self.Cells)
         for aCell in self.Cells:
-            #print eCell.feature
+            print aCell.feature, aCell.type
             eFile.write(aCell.feature + " " + aCell.type +  "\n")
         
         eFile.close()
