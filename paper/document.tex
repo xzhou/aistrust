@@ -11,7 +11,7 @@
 \usepackage{helvet}         % selects Helvetica as sans-serif font
 \usepackage{courier}        % selects Courier as typewriter font
 \usepackage{type1cm}        % activate if the above 3 fonts are
-                            % not available on your system
+\usepackage{algorithmic}                            % not available on your system
 %
 \usepackage{makeidx}         % allows index generation
 \usepackage{graphicx}        % standard LaTeX graphics tool
@@ -52,23 +52,25 @@
 
 \section{Introduction}
 
-\subsection{Subtitle}
+Trust is an important factor in  distributed interaction, which has been studied in economics, philosophy, and computer science.  In computer science, trust is important in the security of distributed and decentralized systems.  Trust management was first introduced in distributed systems in order to unravel the access control problem \cite{blaze}. In distributed system, trust management first introduced to enhance access control models with authentication mechanism. For this purpose, trust management models in distributed system use credentials. But, in many scenarios in  web, trust requirements are not limited to access control. Different application in web such as electronic commerce, web documents, and medical system can have different trust requirements and they need specific policy to  manage trust \cite{surveyInternt}. For example, reputation, rate and recommendation of each entity can  increase its trust value. Moreover, trust should be considered as an attribute based and contextual concept.\\
 
- 
-What is trust management?
-(definition,  TM in distributed system,  TM in web)\\
-(compare TM with access contorl)\\
-Why we are using classifier to do TM?\\
+In this paper, we focused on deciding about the trustworthiness of web pages from both software agent and user perspective. Increasing usage of Internet for different application can leads to many security threats. Internet users and software agents should be certain about the credibility, reliability and trustworthy of the web services and information providers in the web.  Rapid increase in number of malicious site such as phishing site can mislead the internet user and  violate the security and privacy of internet user.  For example, a user can choose malicious online shopping web sites to purchase a product because they have lower price. In this way the user may disclose his or her private information such as credit card number. Therefore, the trust  mechanism is a basic requirement s in online transaction. \\
+
+Most of the trust management models for web and distributed systems can be categorized in to reputation based trust management, policy based trust management and trust negotiation system.  There are several approaches that apply machine-learning technique to compute trust in agent-based system.  We will cover these approaches in section 2. In this paper, we claim that trust can be studied as multi-level classification problem.  We develop and evaluate a binary classification algorithm based on immune system that categorized web pages in to malicious and trusted sites.  Experimentation multi-level classification algorithm is work in progress. Multi-level classification provides us a way to have different level of trust for each web page. Moreover, we can model attribute-based trust management \cite{mitchel} with Multi-level classification. \\
+
 What is immune system?\\
 Our method?\\
 What are the salient features of our work.\\
+
 Evaluation method? \\
-outline of paper
 
 
-
+The rest of this paper is organized as follows. Section 2 review the trust management models, which are proposed for the agent based system, web and distributed systems.  We also review the different applications that are inspired by immune based system. In section 3, we discuss our proposed trust classification algorithm based on immune system.  Section 4 outlines our proposed Trust classification algorithm. Section 5, we present our evaluation results. The paper is concluded with Section 6, which contains brief recapitulation of the main points and further works.
 
 \section{Related Work}
+Policy Maker\cite{blaze} is a first trust management system that addresses problems of access control model in distributed systems.  In the Policy Maker, access control decisions are made based on credentials.  Role based trust management framework \cite{mitchell1}, \cite{mitchell2}, \cite{mitchell3} is another example of these trust management systems that is an authorization model based on role base access control. \\
+
+In web, some of the trust management models estimate trust values by calculating the reputation of the entities \cite{Richardson}. These models consider a transitive property for trust.  Other approaches  use the policy languages to make trust decision \cite{Kagal}.  Trust negotiation techniques are also proposed to make trust decision e.g. \cite{Winslett}, \cite{Winslett2}. Trust negotiation techniques allow subjects in different security domains to exchange securely protected resources and services \cite{Squicciarini}, \cite{Koshutanski}, \cite{Winsborough}, \cite{Winsborough2}. PeerTrust is a policy based trust negotiation system that is based on the first order Horn clause logic \cite{Olmedilla}.
 
 
 Review trust management (check fuzzy approach and learning approachs, social network approach)\\
@@ -76,14 +78,87 @@ Review application of  immune system in spam, IDS, text mining and other related
 
 
 \section{Trust classifier Model }
+In this section we briefly describe how we look at trust management problem as classification problem. Proposed trust classification algorithm is inspired by immune system. We apply cross regulation model \cite{carneiro} to distinguished between malicious and trusted site.\\
+We use immune system in two ways to classify the web pages. First approach, we analyze the content the web pages that include various metadata such as words, hyperlinks, and other signals. Signals can be a trusted signal such as VeriSign and TRUSTe signature or SSL hyperlink. Second approach, we study the link structure of the web pages.  Text analysis helps us to study each web page specifically that provide dynamic property of trust. In this approach, we calculate the score of each web page according to occurrence of different features in that web page. Second approach, we classify each web page according to their in link. We calculate the trust score according to the number of trusted and malicious web pages that cite each web page.\\
 
 \subsection{Cross Regulation Model}
 what is Cross Regulation Model?
-\subsection{Immune System based Trust Management}
 
-\subsubsection{Feature selction from Web Pages Content}
 
-\subsubsection{Link Analysis}
+\subsection{Feature selction from Web Pages Content}
+We represent extracted metadata from each web page as antigens. By metadata, we mean every extracted feature from the document such as words, security signals and hyperlink. Similar to cross regulation model, each antigen will bind to the effectors and regulatory cell. Number of effector and regulatory that bind to antigen shows that antigen is a feature of trusted or malicious web site.
+For each document we consider 50 features. Each feature will have ten slots to bind T-cell. \\
+Our algorithms includes following steps: 
+\begin{itemize}
+\item Feature extraction and Parsing
+We use BeautifulSoup in order to analyze the HTML documents.  After extracting word, we remove the common words and stop words.  We also apply  Porter’s algorithm the words. For each feature we assign ten slot for T-cell binding.
+\item Training 
+At beginning of this stage, we first initialize the parameters related to cross regulation model. For each document we consider 50 antigens and for each antigen we consider 10 slots. We show initial value of  effector and regulatory as $(E_{0Trusted}, R_{0Trusted })$ and $ (E_{0Mal}, R_{0Mal})$  Initial value for effector and regulatory cells is as follows:\\
+$E_{0Trusted} =12$, $R_{0Trusted }=6$,\\ 
+$E_{0Mal} =6$, $R_{0Mal }=5$, \\
+$E_{0test} =6$, $R_{0test }=5$.\\
+Regulatory and effector cells will bind to antigens in corresponding slot in array of features.  The relation $E_{0Trusted}<<R_{0Trusted}$ and $ E_{0Mal}>> R_{0Mal}$  between effector and regulatory should be hold.\\
+
+General algorithm that we use in traing phase is as follow.\\
+\begin{algorithmic}
+\STATE AIS Training :  INPUT: Web Page, Repertoire OUTPUT: Repertoire\\
+\STATE Begin 
+\STATE  AntigenPresentingCell= WebPagesFeatures\\
+\STATE Initialization (AntigenPresentingCell, Repertoire, WebPageType)\\
+\STATE Binding(AntigenPresentingCell, Repertoire)\\
+\STATE Proliferation(AntigenPresentingCell, Repertoire)\\
+\STATE return repertoire\\
+\STATE End\\
+\end{algorithmic}
+
+Binding procedure is as follow: 
+\begin{algorithmic}
+\STATE bind INPUT: Features, Repertoire, OUTPUT: AntigenPresentingCell
+ \STATE Begin      
+\FOR {feature in features}
+\STATE cell= get all cells of this feature
+\STATE slot= get all slots of each =feature
+\STATE randomly select one of the cells
+\STATE bind cells to slots as much as possible
+\ENDFOR
+\STATE return aPageAPC
+\STATE END
+\end{algorithmic}
+Proliferation procedure is as follow:
+\begin{algorithmic}
+\STATE proliferation INPUT: AntigenPresentingCell, Repertoire, OUTPUT:
+\STATE begin
+\FOR {each pair of slots in AntigenPresentingCell}
+\IF {we have two Effector cells $E_f$ and $E_g$}       
+\STATE we proliferate $E_f$ and $E_g$ to $2E_f$ and $2E_g$
+\ENDIF
+
+
+
+\ENDFOR
+\STATE  return interactionResult  
+\STATE End
+\end{algorithmic}
+
+      
+\item Testing
+We show initial value of testing by $(E_{0test} , R_{0test })$.  New web page will examined to find out it is member of which class.  After feature extraction, each feature binds to the effector and regulatory cell according to the information that exist in repertoire.  If a feature was completely a new feature,  it will be considered as malicious world. 
+General algorithm that we use in traing phase is as follow.\\
+\begin{algorithmic}
+\STATE AIS Training :  INPUT: Web Page, Repertoire OUTPUT:\\
+\STATE Begin 
+\STATE  AntigenPresentingCell= WebPagesFeatures\\
+\STATE Initialization (AntigenPresentingCell, Repertoire, WebPageType)\\
+\STATE Binding(AntigenPresentingCell, Repertoire)\\
+\STATE interactionResult=  Proliferation(AntigenPresentingCell, Repertoire)\\
+\ STATE returen decisionPhase(interactionResult)
+\STATE End\\
+\end{algorithmic}
+The new procedure that we have in testing phase is decision procedure that act as follow:\\
+\end{itemize}
+In initialization procedure we extract the features from  the web pages and bind regulatory and effector cell to them according to their type. By type, we mean trusted or malicious site. 
+
+\subsection{Link Analysis}
 
 \section{Evaluation and Results}
 What is our data set? \\
@@ -102,7 +177,7 @@ Compare with Naive based classifier or other trust calculation method?\\
 \begin{thebibliography}{99.}%
 \bibitem{blaze}M. Blaze, J. Feigenbaum and J. Lacy, “Decentralized trust management,” IEEE
 symp. on security and privacy, pp. 164-173, 1996
-
+\bibitem{surveyInternt}
 
 \end{thebibliography}
 
