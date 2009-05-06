@@ -7,7 +7,30 @@ Created on May 6, 2009
 import os
 import DocSeperator
 import ICRM
+import Trainner
+import Repertoire
 
+def test():
+
+    print "recovering from file ...", 
+    repertoire = Repertoire.Repertoire()
+    repertoire.recover("T2.dmp")
+    print "complete, Cells=", len(repertoire.Cells)
+    
+    
+    trustTestData = "../data/testTrusted"
+    untrustedTestData = "../data/testUnTrusted"
+    
+    tester = Detector(repertoire)
+    result = tester.detect(repertoire, trustTestData, "Trusted")
+    print "nPages=", result[1], " Trusted=", result[2], " Untrusted=", result[3],
+    print " noScore",result[4]
+    
+    '''
+    result2 = tester.detect(repertoire, untrustedTestData, "Untrusted")
+    print result2
+    '''
+    
 class Detector(object):
     '''
     Ais test will read a directory of file and report the test result
