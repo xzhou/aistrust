@@ -91,5 +91,8 @@ class AisTrainning(object):
         self.shuffleCells()
         return self.repertoire
         
+    def main(self, trustedDir, untrustedDir):
+        pass
+        
         
         

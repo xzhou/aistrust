@@ -96,7 +96,7 @@ class Repertoire(object):
         recover will read the repertoire back from a file
         '''
         self.Cell = []
-        f = open(fileName, "w")
+        f = open(fileName, "r")
         for line in f:
             feature, type = line.split()
             aCell = Cell(feature, type)

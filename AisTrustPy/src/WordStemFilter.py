@@ -44,8 +44,8 @@ class WordProcess(object):
             for word in words:
                 if word:
                     f = word not in self.commonWords
-                    f = word.isalpha() and f
-                    f = word.find("www") == -1 and f
+                    #f = word.isalpha() and f
+                    #f = word.find("www") == -1 and f
                     if f:
                         word = aPoterStemAlg.stem(word, 0, len(word)-1 )
                         stemmedWords.append(word)

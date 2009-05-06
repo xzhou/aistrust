@@ -86,7 +86,8 @@ class ICRMSystem:
                 elif type == "malicious":
                     repertoire.addMaliciousWord(feature)
                 elif type == "test":
-                    repertoire.addTest(feature)
+                    #repertoire.addTest(feature)
+                    pass
         return aPageAPC
     
     def bind(self, aPageAPC, repertoire):
@@ -98,15 +99,15 @@ class ICRMSystem:
             cells = [cell for cell in repertoire.Cells if cell.feature == feature]
             slots = [slot for slot in aPageAPC.slots if slot.feature == feature]
             random.shuffle(cells)
-            
             if len(cells) > len(slots):
                 for i in range(0, len(slots)):
                     slots[i].bind = cells[i]                
             else:
                 for i in range(0, len(cells)):
                     slots[i].bind = cells[i]
+                i = len(cells)
                 for j in range(i+1, len(slots)):
-                    slots[j].bind = None       
+                    slots[j].bind = None 
         print "complete ",
         return aPageAPC
     
@@ -182,11 +183,10 @@ class ICRMSystem:
                         Rf = Rf + 1
             scoref = (Rf - Ef)/math.sqrt(Rf*Rf + Ef*Ef)
             pageScore = pageScore + scoref
-        
         return pageScore
                     
-    def test(self, fileName, repertoire):
-        aPageAPC = self.preprocess(fileName)
+    def test(self, aPage, repertoire):
+        aPageAPC = self.processAPage(aPage)
         if not aPageAPC == None:
             self.init(aPageAPC, repertoire, "test")
             self.bind(aPageAPC, repertoire)
