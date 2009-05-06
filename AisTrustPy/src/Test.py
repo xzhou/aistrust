@@ -35,7 +35,7 @@ class Detector(object):
                     page.pageType = "test"
                     pageScore = self.testOnePage(page, self.repertoire)
                     if not pageScore:
-                        pass
+                        result[4] += 1
                     elif pageScore <= 0:
                         result[3] += 1
                     else:
@@ -43,7 +43,7 @@ class Detector(object):
     def detect(self, repertoire, fileDir, type=""):
         if type not in ["Trusted", "Untrusted"]:
             raise Exception("unsupported type");
-        result = [type, 0, 0, 0] #type, nPages, trustedPages, untrustedPages
+        result = [type, 0, 0, 0, 0] #type, nPages, trustedPages, untrustedPages
         os.path.walk(fileDir, self.processDir, result);
         
         return result

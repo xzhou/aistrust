@@ -38,7 +38,8 @@ def main():
     
     tester = Test.Detector(repertoire)
     result = tester.detect(repertoire, trustTestData, "Trusted")
-    print "nPages=", result[1], " Trusted=", result[2], " Untrusted=", result[3]
+    print "nPages=", result[1], " Trusted=", result[2], " Untrusted=", result[3],
+    print " noScore",result[4]
     
     
     '''
