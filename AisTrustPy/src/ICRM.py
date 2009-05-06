@@ -79,7 +79,7 @@ class ICRMSystem:
         features = aPageAPC.getFeatures();
         for feature in features:
             if not repertoire.existFeature(feature):
-                print feature
+                #print feature
                 if type == "trusted":
                     #generate E and R cells
                     repertoire.addTrustWord(feature)
@@ -92,14 +92,21 @@ class ICRMSystem:
     def bind(self, aPageAPC, repertoire):
         print "rep size = ", len(repertoire.Cells), 
         print "bind to ", len(aPageAPC.slots), "slots",
-        for slot in aPageAPC.slots:
+        features = aPageAPC.getFeatures()
+        for feature in features:
             #get all cells of this feature and randomly select one
-            cells = [cell for cell in repertoire.Cells if cell.feature == slot.feature]
-            if len(cells):
-                index = random.randint(0, len(cells)-1)
-                slot.bind = cells[index]
+            cells = [cell for cell in repertoire.Cells if cell.feature == feature]
+            slots = [slot for slot in aPageAPC.slots if slot.feature == feature]
+            random.shuffle(cells)
+            
+            if len(cells) > len(slots):
+                for i in range(0, len(slots)):
+                    slots[i].bind = cells[i]                
             else:
-                slot.bind = None
+                for i in range(0, len(cells)):
+                    slots[i].bind = cells[i]
+                for j in range(i+1, len(slots)):
+                    slots[j].bind = None       
         print "complete ",
         return aPageAPC
     
@@ -118,7 +125,7 @@ class ICRMSystem:
                     pass
                 elif f2.bind.type == "E":
                     interactionResult.append(f2.bind)
-                    interactionresult.append(f2.bind)
+                    interactionResult.append(f2.bind)
                     repertoire.addACell(f2.bind.feature, f2.bind.type)
                 elif f2.bind.type == "R":
                     interactionResult.append(f2.bind)
@@ -189,7 +196,7 @@ class ICRMSystem:
     
     def train(self, aPage, repertoire):
         aPageAPC = self.processAPage(aPage)
-        if False and not aPageAPC == None:
+        if True and not aPageAPC == None:
             self.init(aPageAPC, repertoire, aPage.type)
             self.bind(aPageAPC, repertoire)
             self.proliferation(aPageAPC, repertoire)
