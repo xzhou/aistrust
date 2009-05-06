@@ -65,11 +65,14 @@ class AisTrainning(object):
                 fullFileName = os.path.join(directory, file)
                 print "processing file: ", fullFileName
                 if os.path.isfile(fullFileName):
-                    pages = DocSeperator.readFile(fullFileName)
-                    print "number of pages", len(pages)
-                    for page in pages:
+                    page = DocSeperator.readNormalHtml(fullFileName)
+                    if page:
+                        print "******"
                         page.type = "malicious"
-                    self.trainOnPages(pages)
+                        self.trainOnePage(page, self.repertoire)
+                    else:
+                        print page
+                        pass
                 else:      
                     print "not file: ", fullFileName
     

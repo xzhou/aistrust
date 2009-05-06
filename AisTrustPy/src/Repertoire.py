@@ -62,7 +62,7 @@ class Repertoire(object):
             i = i + 1
         
         i = 0
-        while ( i < AisConfig.rMalicous):
+        while ( i < AisConfig.eMalicious):
             aCell = Cell(aWord, "R")
             self.Cells.append(aCell)
             i = i + 1
@@ -86,9 +86,18 @@ class Repertoire(object):
             print "dummping error, can not open file"
         
         print "dumping repertoire to file: ", len(self.Cells)
-        for aCell in self.Cells:
+        badCells = 0
+        try:
+            for aCell in self.Cells:
             #print aCell.feature, aCell.type
-            eFile.write(aCell.feature + " " + aCell.type +  "\n")
+                eFile.write(aCell.feature + " " + aCell.type +  "\n")
+        except Exception, e:
+            #continue write
+            badCells += 1
+            pass
+        
+        print badCell, "bad cells"
+        
         eFile.close()
         
     def recover(self, fileName = "file.dmp"):

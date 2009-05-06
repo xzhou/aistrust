@@ -141,8 +141,14 @@ def readNormalHtml(fileName):
     aRecord = ''''''
     for line in inputFile:
         aRecord += line
+    page, error =  extractWords(aRecord)
     
-    return extractWords(aRecord)
+    #print page.words
+    
+    if not error:
+        return page
+    else:
+        return None
 
 if __name__ == '__main__':
     #readFile("B01.txt")
