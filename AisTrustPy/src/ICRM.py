@@ -61,9 +61,13 @@ class ICRMSystem:
                 print slot.feature
             '''
             return pageAPC
-        else:
-            return None
-    
+        else: #get all words
+            nWords = len(aPage.words)
+            for i in range(0, nWords):
+                sampleFeatures = aPage.words[i]
+            
+            pageAPC = PageAPC(sampleFeatures)
+            return pageAPC
     def preprocess(self, pageFileName):
         '''
         will decompse a web page into words and remove the common words and 

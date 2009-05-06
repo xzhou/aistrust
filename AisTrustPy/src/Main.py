@@ -41,7 +41,6 @@ def main():
     print "nPages=", result[1], " Trusted=", result[2], " Untrusted=", result[3],
     print " noScore",result[4]
     
-    
     '''
     result2 = tester.detect(repertoire, untrustedTestData, "Untrusted")
     print result2
