@@ -88,8 +88,7 @@ class AisTrainning(object):
         unTrustedStates = ["untrusted", 0, 0, 0]
         os.path.walk(untrusted, self.processDir, unTrustedStates)
         
-        #self.repertoire.dump("repertoire.dmp")
-        #self.shuffleCells()
+        self.shuffleCells()
         return self.repertoire
         
         

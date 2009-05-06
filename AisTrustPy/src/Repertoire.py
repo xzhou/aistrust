@@ -87,9 +87,8 @@ class Repertoire(object):
         
         print "dumping repertoire to file: ", len(self.Cells)
         for aCell in self.Cells:
-            print aCell.feature, aCell.type
+            #print aCell.feature, aCell.type
             eFile.write(aCell.feature + " " + aCell.type +  "\n")
-        
         eFile.close()
         
     def recover(self, fileName = "file.dmp"):

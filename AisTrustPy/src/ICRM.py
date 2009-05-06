@@ -56,10 +56,10 @@ class ICRMSystem:
                 sampleFeatures.append(aPage.words[index])
                 i = i + 1
             pageAPC = PageAPC(sampleFeatures)
-            
+            '''
             for slot in pageAPC.slots:
                 print slot.feature
-            
+            '''
             return pageAPC
         else:
             return None
@@ -73,26 +73,25 @@ class ICRMSystem:
         return processAPage(aPage)
 
     def init(self, aPageAPC, repertoire, type="test"):
-        print "init a page ", 
-
+        print "init ",
         if aPageAPC == None:
             return None
         features = aPageAPC.getFeatures();
-        
         for feature in features:
             if not repertoire.existFeature(feature):
+                print feature
                 if type == "trusted":
                     #generate E and R cells
-                    print feature
                     repertoire.addTrustWord(feature)
                 elif type == "malicious":
                     repertoire.addMaliciousWord(feature)
                 elif type == "test":
                     repertoire.addTest(feature)
-        print "complete"
         return aPageAPC
     
     def bind(self, aPageAPC, repertoire):
+        print "rep size = ", len(repertoire.Cells), 
+        print "bind to ", len(aPageAPC.slots), "slots",
         for slot in aPageAPC.slots:
             #get all cells of this feature and randomly select one
             cells = [cell for cell in repertoire.Cells if cell.feature == slot.feature]
@@ -101,12 +100,14 @@ class ICRMSystem:
                 slot.bind = cells[index]
             else:
                 slot.bind = None
+        print "complete ",
         return aPageAPC
     
     def proliferation(self, aPageAPC, repertoire):
         '''
         this is the proliferation pahse of T, E cell with antigen
         '''
+        print "proliferation"
         interactionResult = []
         for i in range(0, len(aPageAPC.slots)-1):
             f1 = aPageAPC.slots[i]
@@ -156,7 +157,7 @@ class ICRMSystem:
         '''
         decision phase count the E cells and R cells that a page bind to  and 
         return the score for this page, a score > 0 means trusted
-        '''
+        '''   
         pageScore = 0
         features = []
         for cell in interactionResult:
@@ -188,7 +189,7 @@ class ICRMSystem:
     
     def train(self, aPage, repertoire):
         aPageAPC = self.processAPage(aPage)
-        if not aPageAPC == None:
+        if False and not aPageAPC == None:
             self.init(aPageAPC, repertoire, aPage.type)
             self.bind(aPageAPC, repertoire)
             self.proliferation(aPageAPC, repertoire)

@@ -33,15 +33,15 @@ class WordProcess(object):
             words = " ".join(words);
             words = ''.join(ch for ch in words if ch not in exclude)
             words = words.split()
-            words = [word.lower() for word in words if len(word) > 3]
+            words = [word.lower() for word in words if len(word) > 3 and len(word) < 20]
             for word in words:
-                if(word and word not in self.commonWords):
-                    word = aPoterStemAlg.stem(word, 0, len(word)-1 )
-                    stemmedWords.append(word)
-            return stemmedWords
+                if word:
+                    f = word not in self.commonWords
+                    f = word.isalpha() and f
+                    f = word.find("www") == -1 and f
+                    if f:
+                        word = aPoterStemAlg.stem(word, 0, len(word)-1 )
+                        stemmedWords.append(word)
+            return stemmedWords        
         else:
             return []
-            
-            
-        
-        

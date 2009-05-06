@@ -44,22 +44,23 @@ def extractWords(aRecord):
     try:
         soup = BeautifulSoup(aRecord, convertEntities=BeautifulSoup.HTML_ENTITIES)
         #exclude punctuation
-        exclude = set(string.punctuation)
+        #exclude = set(string.punctuation)
         #if the doc has body, extract the words in body
         if(soup.title):
             title = soup.title(text = True)
             aPage.title = wp.filterAndStem(title)
             aPage.title = uniqueWords(aPage.title, None)
         
+        '''
         if(soup.body):
             bodyText= soup.body(text=True)
             aPage.words = wp.filterAndStem(bodyText)
             aPage.words = uniqueWords(aPage.words, None)
         # else we extract all string
-        else:
-            allText = soup.findAll(text=True)
-            aPage.words = wp.filterAndStem(allText)
-            aPage.words = uniqueWords(aPage.words, None)
+        '''
+        allText = soup.findAll(text=True)
+        aPage.words = wp.filterAndStem(allText)
+        aPage.words = uniqueWords(aPage.words, None)
             #print len(aPage.words)
         
         #get the out link page
@@ -83,29 +84,38 @@ def extractWords(aRecord):
         file.write(aRecord)
         file.close() 
         return aPage, 1
-    
-    
+
 def readFile(fileName):
     inputFile = open(fileName, 'r')
     pages = []
     aRecord = ''''''
     allPages = 0
     badPages = 0
+    npages = 0
+    flag = False
     for line in inputFile:
         #print line
         if line.startswith("<DOC>"):
             #we have read a new blockrea
-            aRecord = line
+            #clear record
+            aRecord = ""
         elif line.startswith("</DOC>"):
-            aRecord += line
+            flag = False
+            #aRecord += line
             allPages += 1
+            #print aRecord
+            print npages, "pages extracted"
             aPage, i = extractWords(aRecord)
             if i == 0: 
                 pages.append(aPage)
             badPages += i
+            npages += 1
+        elif line.startswith("</DOCHDR>"):
+            flag = True
         else:
-            aRecord+=line
-       
+            if flag:
+                aRecord += line
+                
     print "pages processed: ", allPages
     print "bad pages: ",  badPages
     print (badPages*1.0/allPages)*100, "%"
@@ -124,9 +134,6 @@ def readNormalHtml(fileName):
         aRecord += line
     
     return extractWords(aRecord)
-
-        
-
 
 if __name__ == '__main__':
     #readFile("B01.txt")
