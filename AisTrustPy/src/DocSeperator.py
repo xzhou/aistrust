@@ -74,11 +74,14 @@ def extractWords(aRecord):
         aPage.outLinks = outLinks
         #we have to construct the inlink
         #we need the other meta data
-        return aPage, 0
+        if len(aPage.words) > 0:
+            return aPage, 0
+        else:
+            return aPage, 1
      
     except Exception, e:
         print "dump error html"
-        file = open("error.html", 'w')
+        file = open("error.html", 'a')
         file.write(aRecord)
         file.close() 
         return aPage, 1
@@ -104,6 +107,11 @@ def readFile(fileName):
             #print aRecord
             print npages, "pages extracted"
             aPage, i = extractWords(aRecord)
+            if len(aPage.words) == 0:
+                f = open("emptyPage.txt", 'w')
+                f.write("\n---\n")
+                f.write(aRecord)
+                f.write("\n---\n")
             if i == 0: 
                 pages.append(aPage)
             badPages += i
@@ -116,7 +124,10 @@ def readFile(fileName):
                 
     print "pages processed: ", allPages
     print "bad pages: ",  badPages
-    print (badPages*1.0/allPages)*100, "%"
+    if allPages > 0:
+        print (badPages*1.0/allPages)*100, "%"
+    else:
+        print "0.0%"
     #return the pages in
     print "good pages: ", len(pages) 
     return pages
@@ -135,4 +146,4 @@ def readNormalHtml(fileName):
 
 if __name__ == '__main__':
     #readFile("B01.txt")
-    pass
+    readNormalHtml("e1.txt")

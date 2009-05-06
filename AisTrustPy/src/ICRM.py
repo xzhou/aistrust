@@ -47,7 +47,7 @@ class ICRMSystem:
     def __init__(self):
         pass
     
-    def processAPage(self, aPage):
+    def page2APC(self, aPage):
         sampleFeatures = []
         if len(aPage.words) >= AisConfig.nSample:
             i = 0
@@ -190,7 +190,8 @@ class ICRMSystem:
         return pageScore
                     
     def test(self, aPage, repertoire):
-        aPageAPC = self.processAPage(aPage)
+        #page -> APC
+        aPageAPC = self.page2APC(aPage)
         if not aPageAPC == None:
             self.init(aPageAPC, repertoire, "test")
             self.bind(aPageAPC, repertoire)
@@ -199,7 +200,7 @@ class ICRMSystem:
         return None
     
     def train(self, aPage, repertoire):
-        aPageAPC = self.processAPage(aPage)
+        aPageAPC = self.page2APC(aPage)
         if True and not aPageAPC == None:
             self.init(aPageAPC, repertoire, aPage.type)
             self.bind(aPageAPC, repertoire)
