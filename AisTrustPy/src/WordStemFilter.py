@@ -31,7 +31,14 @@ class WordProcess(object):
         exclude = set(string.punctuation)
         if(words):
             words = " ".join(words);
-            words = ''.join(ch for ch in words if ch not in exclude)
+            #words = ''.join(ch for ch in words if ch not in exclude) 
+            newWords = ""
+            for ch in words:
+                if ch in exclude:
+                    newWords += " "
+                else:
+                    newWords += ch 
+            words = newWords
             words = words.split()
             words = [word.lower() for word in words if len(word) > 3 and len(word) < 20]
             for word in words:
@@ -42,6 +49,7 @@ class WordProcess(object):
                     if f:
                         word = aPoterStemAlg.stem(word, 0, len(word)-1 )
                         stemmedWords.append(word)
+            #print stemmedWords
             return stemmedWords        
         else:
             return []

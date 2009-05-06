@@ -30,9 +30,6 @@ class WebPage(object):
     
     def setMetadata(self, metadata):
         self.metadata = metadata
-    
-    
-    
 if __name__ == '__main__':
     pass
     

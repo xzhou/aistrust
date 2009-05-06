@@ -51,18 +51,16 @@ def extractWords(aRecord):
             aPage.title = wp.filterAndStem(title)
             aPage.title = uniqueWords(aPage.title, None)
         
-        '''
         if(soup.body):
             bodyText= soup.body(text=True)
             aPage.words = wp.filterAndStem(bodyText)
             aPage.words = uniqueWords(aPage.words, None)
         # else we extract all string
-        '''
-        allText = soup.findAll(text=True)
-        aPage.words = wp.filterAndStem(allText)
-        aPage.words = uniqueWords(aPage.words, None)
+        else:
+            allText = soup.findAll(text=True)
+            aPage.words = wp.filterAndStem(allText)
+            aPage.words = uniqueWords(aPage.words, None)
             #print len(aPage.words)
-        
         #get the out link page
         links = [ each.get('href') for each in soup.findAll('a') ]
         outLinks = []
