@@ -34,6 +34,7 @@
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 \author{Azadeh Nematzadeh, Xiaoyong Zhou and Luis M. Rocha}
+\institute{ Indiana University, Informatics department}
 % Use \authorrunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 
@@ -75,9 +76,9 @@ We represent extracted metadata from each web page as antigens. By metadata, we 
 For each document we consider maximum 50 features. Each feature will have ten slots to bind T-cells. \\
 Our algorithms include following steps: 
 \begin{itemize}
-\item Feature extraction and Parsing
+\item Feature extraction and Parsing\\
 We use BeautifulSoup in order to analyze the HTML documents.  After extracting word, we remove the common words and stop words.  We also apply  Porter’s algorithm the words. For each feature we assign ten slot for T-cell binding.
-\item Training 
+\item Training \\
 At the beginning of this stage, we first initialize the parameters related to cross regulation model. For each document we consider 50 antigens and for each antigen we consider 10 slots. We show initial value of  effector and regulatory as $(E_{0Trusted}, R_{0Trusted })$ and $ (E_{0Mal}, R_{0Mal})$  Initial value for effector and regulatory cells is as follows:\\
 $E_{0Trusted} =12$, $R_{0Trusted }=6$,\\ 
 $E_{0Mal} =6$, $R_{0Mal }=5$, \\
@@ -119,7 +120,7 @@ Proliferation procedure is as follow:
 \STATE  return interactionResult  
 \STATE End
 \end{algorithmic}
-\item Testing
+\item Testing\\
 We show initial value of testing by $(E_{0test} , R_{0test })$.  New web page will examined to find out it is member of which class.  After feature extraction, each feature binds to the effector and regulatory cell according to the information that exist in repertoire.  If a feature was completely a new feature,  it will be considered as malicious world. 
 General algorithm that we use in traing phase is as follow.\\
 \begin{algorithmic}
@@ -145,6 +146,7 @@ The new procedure that we have in testing phase is decision procedure that act a
 
 \subsection{Link Analysis}
 work in progress, (we have not finish evalutation of  this part yet )
+
 \section{Evaluation and Results}
 To verify our idea, we build a simple AIS-base trust system. The system first
 train a a set of trusted and untrusted web sites and then generate an
@@ -203,8 +205,6 @@ We also need to run more evaluation. We already implemented the Naïve Bayesian 
 The cross regulation algorithm that we currently used can be more complicated. For example, currently we did not consider the death rate for t-cells. We think we may be able to use different type of t-cells that can live longer. Or since trust is dynamic concepts, it can change over the time. We think about using a model that can provide us this kind of dynamic update. \\
 The most interesting continuation of this research in our perspective is presenting multi level trust classifier based on immune system. In This way we can look at trust as fuzzy concept and calculate trust specifically for each attribute of the web pages.  \\
 As more web pages employ java script to enhance the intractability, java script introduce more security issues. Well the understanding the semantic of java script would be difficult. In \cite{kruegel03:webanomaly}, a script analysis way was proposed, but understanding the semantics of java scrip would be complex, we are thinking about using AIS system to analysis java scripts and differentiate that trusted and malicious java script code.
-
-\acknowledgements{Acknowledgements belong here.}
 
 \begin{thebibliography}{99.}%
 \bibitem{blaze} M. Blaze, J. Feigenbaum and J. Lacy, “Decentralized trust management,” IEEE
