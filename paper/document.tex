@@ -169,12 +169,32 @@ Evaluation method?\\
 
 Compare with Naive based classifier or other trust calculation method?\\
 
-\section{Conclusion}
 
-%\begin{acknowledgement}
-%A special thanks to Al and Fillipo for his guidance and assistance, for helpful discussion, and data %set. 
-%\end{acknowledgement}
-%
+\textbf{Web Page to APC}. Each web page is decomposed in to words titles, bodies(if the page has) and links. Each words is then filtered by our filter and stemming algorithm\cite{Porter}. In detail, each words that is less than 3 characters are filtered. Then we filter out the common English words\cite{Common}. For those words that are all digitals, we will generate a lower number of E cells and R cells assume to avoid the explosion of the immune system's repertoire. Then for each words, we user Porter's stemming algorithm to get the stem of each words. Now we get a web page with it title, body words and links. Then we randomly select a maximum of 50 words from each web page and create an APC cell for each web page. In the APC, we create 10 binding slots for each selected words. 
+
+
+\textbf{Initialize}. In the training stage, for each words, if that words is not in the repertoire, we will generate cells for that words. For a trusted web page, we will generate more R cells(in this case 12) and E cells(in this case 6) for trust web page. For untrusted web pages, we will generate 6 E cells and 5 R cells. In this way, we assume the R cells for that feature will regulate the E cell in the future. 
+
+\textbf{Biding}. After initialize the APC, we will randomly bind each binding slots with the T cells from the repertoire with the same words. If we do not have enough T cells to bind to, we ignore that slot. 
+
+\textbf{Proliferation}. When the slots binds to the T cells, we will run the regulatory algorithm for each pair of slots. For example, if $E_f$ and $R_g$ are neighbors in the APC slots, $R_g$ will reproduce and $E_f$ will be suppressed. Which will cause more R cells if the web pages are supposed to be a trusted web page. For the new born cells, the will be add to the repertoire which is a analogy to the activation to a cell. 
+
+\textbf{Detect}. When the system was trained, we get a repertoire of T cells that can be used to differentiate a web page. For a new page, it will be processed(initialize, bind, proliferate) the same as a untrusted page in the training page. The only difference is that after proliferation, we will calculate the score for each words and add them together as the score for that web page. If the score is positive, we classified it as trusted. Other wise untrusted. 
+
+\subsection{Performance Considerations}
+While running our system, we find that binding is the most time consuming stage. To bind to a words, we first have to select all the cells from the repertoire and then select all the slot of this cell and then bind. When the repertoire becomes big, it will take time to get all the cells of a words from the repertoire. Currently, we implemented the repertoire as a array of cells. A better way would be using some tree structure to organize all the cells so they can be easily retrieved. An alternative way would be generate one type of cell for each words and record the number of bindings and the number of this cell. 
+
+\begin{figure}[h]
+\begin{center}
+\scalebox{0.5}{\includegraphics{arch.eps}}
+\caption{AIS-based Trust Computing system}
+\label{fig:arch}
+\end{center}
+\vspace{-20pt}
+\end{figure}
+
+\subsection{Result}
+We trained our Immune system
 
 \begin{thebibliography}{99.}%
 \bibitem{blaze}M. Blaze, J. Feigenbaum and J. Lacy, “Decentralized trust management,” IEEE
@@ -214,4 +234,6 @@ Networks, pages 92-103, 2002.
 \bibitem{taskspecific} I. Erete, E. Ferguson, S. Sen, " learning task-specific trust decision," Proceedings of the 7th international joint conference on Autonomous agents and multiagent systems , vol. 3,  pp. 1477-1480, 2008.
 \end{thebibliography}
 
+\bibliographystyle{plain}
+\bibliography{bib}
 \end{document}
