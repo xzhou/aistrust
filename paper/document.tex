@@ -49,16 +49,18 @@
 
 Trust is an important factor in  distributed interaction, which has been studied in economics, philosophy, and computer science.  In computer science, trust is important in the security of distributed and decentralized systems.  Trust management was first introduced in distributed systems in order to unravel the access control problem \cite{blaze}. In distributed system, trust management first introduced to enhance access control models with authentication mechanism. For this purpose, trust management models in distributed system use credentials. But, in many scenarios in  web, trust requirements are not limited to access control. Different application in web such as electronic commerce, web documents, and medical system can have different trust requirements and they need specific policy to  manage trust \cite{surveyInternt}. For example, reputation, rate and recommendation of each entity can  increase its trust value. Moreover, trust should be considered as an attribute based and contextual concept.\\
 
-In this paper, we focused on deciding about the trustworthiness of web pages from both software agent and user perspective. Increasing usage of Internet for different application can leads to many security threats. Internet users and software agents should be certain about the credibility, reliability and trustworthy of the web services and information providers in the web.  Rapid increase in number of malicious site such as phishing site can mislead the internet user and  violate the security and privacy of internet user.  For example, a user can choose malicious online shopping web sites to purchase a product because they have lower price. In this way the user may disclose his or her private information such as credit card number. Therefore, the trust  mechanism is a basic requirement s in online transaction. \\
+In this paper, we focused on deciding about the trustworthiness of web pages from both software agent and user perspective. Increasing usage of Internet for different application can leads to many security threats. Internet users and software agents should be certain about the credibility, reliability and trustworthy of the web services and information providers in the web.  Rapid increase in number of malicious site such as phishing site can mislead the Internet user and  violate the security and privacy of Internet user.  For example, a user can choose malicious online shopping web sites to purchase a product because they have lower price. In this way the user may disclose his or her private information such as credit card number. Therefore, the trust  mechanism is a basic requirement s in online transaction. \\
 
 Most of the trust management models for web and distributed systems can be categorized in to reputation based trust management, policy based trust management and trust negotiation system.  There are several approaches that apply machine-learning technique to compute trust in agent-based system.  We will cover these approaches in section 2. In this paper, we claim that trust can be studied as multi-level classification problem.  We develop and evaluate a binary classification algorithm based on immune system that categorized web pages in to malicious and trusted sites.  Experimentation multi-level classification algorithm is work in progress. Multi-level classification provides us a way to have different level of trust for each web page. Moreover, we can model attribute-based trust management \cite{mitchell} with Multi-level classification. \\
 
 Extensive and inevitable growth of malicious web sites and malwares makes us think that web can be considered as system that can be evolved to protect itself from different threats.  Immune system or defense system has the same property that it has evolved to protect its host from pathogens. 
 Therefore, we decide to apply and experiment artificial immune systems (AIS) \cite{AIS} in web in order to distinguish between malicious and trusted web site.\\ 
 
-Our method?\\
-What are the salient features of our work.\\
-Evaluation method? \\
+%%Our method?\\
+%%What are the salient features of our work.\\
+%%Evaluation method? \\
+
+This paper is mostly inspired by \cite{Al1}. We use the cross-regulation model\cite{carneiro} to build a artificial immune system to differentiate malicious website from trusted web site. In addition, as malicious web sites are connected with links, we also consider link relationship as a feature in to evaluate the trustworthiness of a web site. 
 
 
 The rest of this paper is organized as follows. Section 2 review the trust management models, which are proposed for the agent based system, web and distributed systems.  We also review the different applications that are inspired by immune based system. In section 3, we discuss our proposed trust classification algorithm based on immune system.  Section 4 outlines our proposed Trust classification algorithm. Section 5, we present our evaluation results. The paper is concluded with Section 6, which contains brief recapitulation of the main points and further works.
@@ -219,7 +221,11 @@ Number of Pages & Page Type & Trusted Pages & Untrusted Page & False \%\\
 link analysis\\
 compare results with baysian \\
 multi level trust classification\\
-enhance the model
+enhance the model\\
+
+
+\textbf{Java script analysis}
+As more web pages employ java script to enhance the intractability, java script introduce more security issues. Well the understanding the semantic of java script would be difficult. In \cite{kruegel03:webanomaly}, a script analysis way was proposed, but understanding the semantics of java scrip would be complex, we are thinking about using AIS system to analysis java scripts and differentiate that trusted and malicious java script code.
 
 
 \begin{thebibliography}{99.}%
@@ -286,7 +292,12 @@ S.E.~Robertson C.J.~van Rijsbergen and M.F. Porter.
 
 \bibitem{carneiro} J. Carneiro, K. Leon, I. Caramalho, and R. Gardner “When there is not a crowd: a cross regulation model of the dynamics and repertoire selection of regulatory CD4+ T cells,” Immunological reviews, vol. 216, pp. 48-68, 2007.
 
-
+\bibitem{kruegel03:webanomaly}
+C.~Kruegel and G.~Vigna.
+\newblock {Anomaly Detection of Web-based Attacks}.
+\newblock In {\em Proceedings of the $10^{th}$ ACM Conference on Computer and
+  Communication Security (CCS '03)}, pages 251--261, Washington, DC, October
+  2003. ACM Press.
 \end{thebibliography}
 
 %%\bibliographystyle{plain}
