@@ -202,7 +202,23 @@ While running our system, we find that binding is the most time consuming stage.
 \end{figure}
 
 \subsection{Result}
-We trained our Immune System using the data in 
+We trained our Immune System using the data in GOV WTX001 data set\cite{WTX}. We did not train on the whole data set due to the limited time for this project. For untrusted web site, we trained our system over 120000 web pages listed in \cite{WEBSPAM-UK2007}. Then we tested our system over 219 trusted web pages and 200 untrusted web pages in \cite{WEBSPAM-UK2007}. The result is presented in Table \ref{table:result}.
+\begin{table}[t]
+\renewcommand{\arraystretch}{1.3}
+\caption{\small Ais-based Trust System Result}
+\label{table:result}
+\centering
+{\scriptsize
+\begin{tabular}{ccccc}
+\hline
+Number of Pages & Page Type & Trusted Pages & Untrusted Page & False \%\\
+\hline
+219 & Trusted & 201 & 18 & 8.2\%\\
+200 & Untrusted & 38 & 162 & 19\%\\
+\hline
+\end{tabular}
+}
+\end{table}
 
 \section{Conclusion and Future Works}
 link analysis\\
