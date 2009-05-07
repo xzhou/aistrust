@@ -172,13 +172,24 @@ trusted web pages and untrusted web pages and get the accuracy.
 \subsection{Data Set}
 For the trusted website, we used a data set of government data \cite{WTX}. For
 malicious web pages, it is not a easy task. Usually, such wet site is teared
-down very quickly and not easy to get trainning data. In our experiments, we
+down very quickly and not easy to get training data. In our experiments, we
 used the WEBSPAM-UK2007 data set \cite{WEBSPAM-UK2007} from Yahoo research.
-This is a large collection of annotated spam/nonspam hosts labeled by a group of volunteers. 
-The base data is a set of 105,896,555 pages in 114,529 hosts in the .UK domain.
-We consider spam web site as untrusted. 
+This is a large collection of annotated spam/nonspam hosts labeled by a group of volunteers. The base data is a set of 105,896,555 pages in 114,529 hosts in the .UK domain. We consider spam web site as untrusted. 
 
 \subsection{AIS-based Trust System}
+To verify our AIS-based Trust System, we build a prototype system, trained on the data set and tested our system. Figure \ref{fig:arch} gives the architecture of our system. The trusted and untrusted web pages are preprocessed and then presented as an Antigen Presenting Cell page that randomly select some words from the page. Then we will run the regulatory model of immune system to the pages and generate the E cell and R cell repertoire. The details of the system is presented as follows.
+
+
+\textbf{Web Page to APC}. Each web page is decomposed in to words titles, bodies(if the page has) and links. Each words is then filtered by our filter and stemming algorithm\cite{Porter}. In detail, each words that is less than 3 characters are filtered. Then we filter out the common English words\cite{Common}. For those words that are all digitals, we will generate a lower number of E cells and R cells assume to avoid the explosion of the immune system's repertoire. Then for each words, we user Porter's stemming algorithm to get the stem of each words. Now we get a web page with it title, body words and links. Then we randomly select a maximum of 
+\begin{figure}[h]
+\begin{center}
+\scalebox{0.5}{\includegraphics{arch.eps}}
+\caption{AIS-based Trust Computing system}
+\label{fig:arch}
+\end{center}
+\vspace{-20pt}
+\end{figure}
+
 
 
 \subsection{Comparison}
