@@ -103,7 +103,7 @@ class Repertoire(object):
         except Exception, e:
             print "dummping error, can not open file"
         
-        print "dumping repertoire to file: ", len(self.Cells)
+        print "dumping repertoire to file: ", self.getNumOfCells()
         badCells = 0
         try:
             for aList in self.Cells.values():
