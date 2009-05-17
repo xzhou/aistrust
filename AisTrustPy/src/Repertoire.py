@@ -24,50 +24,68 @@ class Repertoire(object):
         '''
         Constructor
         '''
-        self.Cells = []
+        #self.Cells = []
+        self.Cells = {} #Cells is a dictionary of list
     
     def existFeature(self, aWord):
-        for cell in self.Cells:
-            if cell.feature == aWord:
-                return True
-        return False
+        return self.Cells.has_key(aWord)
+    
+    def getNumOfCells(self):
+        i = 0
+        for list in self.Cells:
+            i += len(list)
+        return i
     
     def addACell(self, feature, type):
-        self.Cells.append(Cell(feature, type))
+        if not self.Cells.has_key(feature):
+            self.Cells["feature"] = []
+        self.Cells[feature].append(Cell(feature, type))
         
     def addTrustWord(self, aWord):
         '''
         add positive will initialize the T Cells and R Cells according to 
         the configuration, ePositive << rPositive 
         '''
+        
+        if not self.Cells.has_key(aWord):
+            self.Cells[aWord] = []
+        
         i = 0
         while ( i < AisConfig.eTrusted):
             aCell = Cell(aWord, "E")
-            self.Cells.append(aCell)
+            self.Cells["aWord"].append(aCell)
             i = i + 1
         i = 0
         while( i < AisConfig.rTrusted):
             aCell = Cell(aWord, "R")
-            self.Cells.append(aCell)
+            self.Cells["aWord"].append(aCell)
             i = i + 1
         
     def addMaliciousWord(self, aWord):
         '''
         initialize a malicious word
         '''
+        
+        if not self.Cells.has_key(aWord):
+            self.Cells["aWord"] = []
+        
         i = 0
         while ( i < AisConfig.eMalicious):
             aCell = Cell(aWord, "E")
-            self.Cells.append(aCell)
+            self.Cells["aWord"].append(aCell)
             i = i + 1
         
         i = 0
         while ( i < AisConfig.eMalicious):
             aCell = Cell(aWord, "R")
-            self.Cells.append(aCell)
+            self.Cells["aWord"].append(aCell)
             i = i + 1
     
     def addTest(self, aWord):
+        
+        if not self.Cells.has_key(aWord):
+            self.Cells["aWord"] = []
+        
         i = 0
         while( i < AisConfig.eTest):
             aCell = Cell(aWord, "E")
@@ -88,9 +106,9 @@ class Repertoire(object):
         print "dumping repertoire to file: ", len(self.Cells)
         badCells = 0
         try:
-            for aCell in self.Cells:
-            #print aCell.feature, aCell.type
-                eFile.write(aCell.feature + " " + aCell.type +  "\n")
+            for aList in self.Cells.values():
+                for aCell in aList:
+                    eFile.write(aCell.feature + " " + aCell.type +  "\n")
         except Exception, e:
             #continue write
             badCells += 1
@@ -104,12 +122,15 @@ class Repertoire(object):
         '''
         recover will read the repertoire back from a file
         '''
-        self.Cell = []
+        self.Cell = {}
         f = open(fileName, "r")
         for line in f:
             feature, type = line.split()
+            if not self.Cells.has_key(feature):
+                self.Cells["feature"] = []
             aCell = Cell(feature, type)
-            self.Cells.append(aCell)
+            self.Cells["feature"].append(aCell)
+            
         
         
         
