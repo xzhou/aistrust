@@ -77,7 +77,8 @@ class AisTrainning(object):
                     print "not file: ", fullFileName
     
     def shuffleCells(self):
-        random.shuffle(self.repertoire.Cells)
+        for list in self.repertoire.Cells.values():    
+            random.shuffle(list)
     
     def train(self, trusted, untrusted):
         '''

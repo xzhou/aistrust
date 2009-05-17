@@ -53,12 +53,12 @@ class Repertoire(object):
         i = 0
         while ( i < AisConfig.eTrusted):
             aCell = Cell(aWord, "E")
-            self.Cells["aWord"].append(aCell)
+            self.Cells[aWord].append(aCell)
             i = i + 1
         i = 0
         while( i < AisConfig.rTrusted):
             aCell = Cell(aWord, "R")
-            self.Cells["aWord"].append(aCell)
+            self.Cells[aWord].append(aCell)
             i = i + 1
         
     def addMaliciousWord(self, aWord):
@@ -67,24 +67,24 @@ class Repertoire(object):
         '''
         
         if not self.Cells.has_key(aWord):
-            self.Cells["aWord"] = []
+            self.Cells[aWord] = []
         
         i = 0
         while ( i < AisConfig.eMalicious):
             aCell = Cell(aWord, "E")
-            self.Cells["aWord"].append(aCell)
+            self.Cells[aWord].append(aCell)
             i = i + 1
         
         i = 0
         while ( i < AisConfig.eMalicious):
             aCell = Cell(aWord, "R")
-            self.Cells["aWord"].append(aCell)
+            self.Cells[aWord].append(aCell)
             i = i + 1
     
     def addTest(self, aWord):
         
         if not self.Cells.has_key(aWord):
-            self.Cells["aWord"] = []
+            self.Cells[aWord] = []
         
         i = 0
         while( i < AisConfig.eTest):
@@ -114,7 +114,7 @@ class Repertoire(object):
             badCells += 1
             pass
         
-        print badCell, "bad cells"
+        print badCells, "bad cells"
         
         eFile.close()
         
