@@ -107,6 +107,7 @@ class Repertoire(object):
         badCells = 0
         try:
             for aList in self.Cells.values():
+                print aList[0].feature
                 for aCell in aList:
                     eFile.write(aCell.feature + " " + aCell.type +  "\n")
         except Exception, e:

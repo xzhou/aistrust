@@ -9,6 +9,8 @@ import urllib2
 from BeautifulSoup import BeautifulSoup
 import socket
 
+
+
 class WebCrowler(object):
     '''
     donwload the webpages
