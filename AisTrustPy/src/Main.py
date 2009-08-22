@@ -11,6 +11,9 @@ import Trainner
 import Test
 import Repertoire
 import Train
+import psyco
+
+psyco.full()
 
 def main():
     
