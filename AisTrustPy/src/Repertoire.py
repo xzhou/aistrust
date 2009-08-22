@@ -123,14 +123,15 @@ class Repertoire(object):
         '''
         recover will read the repertoire back from a file
         '''
-        self.Cell = {}
+        self.Cells = {}
         f = open(fileName, "r")
-        for line in f:
+        lines = f.readlines();
+        for line in lines:
             feature, type = line.split()
             if not self.Cells.has_key(feature):
-                self.Cells["feature"] = []
+                self.Cells[feature] = []
             aCell = Cell(feature, type)
-            self.Cells["feature"].append(aCell)
+            self.Cells[feature].append(aCell)
             
         
         

@@ -101,7 +101,11 @@ class ICRMSystem:
         for feature in features:
             #get all cells of this feature and randomly select one
             #cells = [cell for cell in repertoire.Cells if cell.feature == feature]
-            cells = repertoire.Cells[feature]
+            if not repertoire.Cells.has_key(feature):
+                cells = []
+            else:
+                cells = repertoire.Cells[feature]
+                
             slots = [slot for slot in aPageAPC.slots if slot.feature == feature]
             random.shuffle(cells)
             if len(cells) > len(slots):
